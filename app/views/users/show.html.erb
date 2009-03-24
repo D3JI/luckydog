@@ -1,0 +1,46 @@
+<% if flash[:notice]%>
+  <%= flash[:notice] %>
+<% end %>
+<div class="mod">
+  <div class="modth">
+    <div class="lc">
+      <div class="rc">
+        <div class="modtit">
+          <h1><%= link_to @user.username, control_path(:user_id => @user) %></h1>
+        </div>
+        <div class="modopt"><%= link_to '编辑资料' %></div>
+      </div>
+    </div>
+  </div>
+  <div id="m_pro" class="modbox">
+    <ul>
+      <li class="image">
+      <% if @user.avatar %>
+        <%= image_tag(@user.avatar.public_filename(:thumb)) %>
+      <% else %>
+        <%= image_tag('../images/noface.jpg')%>
+      <% end %>
+      </li>
+      <li class="user">美女|21岁</li>
+      <% if logged_in_user == @user %>
+        <li class="a"><%= link_to '修改头像' %></li>
+        <li class="b"><%= link_to '发表文章', new_user_entry_path(:user_id => logged_in_user.id) %></li>
+        <li class="c"><%= link_to '上传照片', user_albums_path(:user_id => logged_in_user.id) %></li>
+      <% else %>
+        <% if logged_in_user.friends.include?(@user) %>
+          My Friend
+        <% else %>
+          <li class="a"><%= link_to '加为好友', new_user_friend_path(:user_id => logged_in_user.id, :friend_id => @user.id) %></li>
+        <% end %>
+        <li class="b"><%= link_to '给他留言',user_comments_path(:user_id => @user.id)%></li>
+        <li class="c"><%= link_to '发短信息', new_user_message_path(:recipient_id => @user.id, :user_id => logged_in_user) %></li>
+      <% end %>
+      <li class="desc addr">地点：</li>
+      <li class="desc">等级：</li>
+      <li class="desc">积分：</li>
+      <li class="desc">上次登录：</li>
+      <li class="clear">&nbsp;</li>
+    </ul>
+    <p class="more"><%= link_to '详细资料»' %></p>
+  </div>
+</div>

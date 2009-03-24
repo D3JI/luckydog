@@ -1,0 +1,10 @@
+<% @themecategories.each do |category|%>
+  <%= category.name %><p>
+  <% category.themes.each do |theme|%>
+    <li><%= theme.name %>
+    <%= link_to '删除', admin_theme_category_theme_path(:theme_category_id => category.id, :id => theme.id), :method => :delete, :confirm => "Sure?" %>
+    </li>
+  <% end %>
+  </p>
+<% end %>
+<%= link_to '添加主题', new_admin_theme_path %>

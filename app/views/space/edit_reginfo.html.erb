@@ -1,0 +1,66 @@
+<% if flash[:error]%>
+  <div class="error"><%= flash[:error]%></div>
+<% end %>
+<% if flash[:password]%>
+  <div class="alert"><%= flash[:password]%></div>
+<% end %>
+<div class="modbox" id="l_profile">
+  <% form_for @user, :html => { :method => :put } do |f|%>
+    <%= f.error_messages %>
+    <table border="0" cellpadding="5" cellspacing="0" width="100%">
+      <tbody><tr>
+          <td width="13%">当前密码：</td>
+          <td width="87%"><%= f.password_field :oldpassword, :class => 'input'%></td>
+        </tr>
+        <tr>
+          <td>新密码：</td>
+          <td><%= f.password_field :password, :class => 'input' %></td>
+        </tr>
+        <tr>
+          <td>确认新密码：</td>
+          <td><%= f.password_field :password_confirmation, :class => 'input' %></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><label>
+              <%= submit_tag '提交修改', :class => 'button' %>
+              <input name="modify" id="step" value="pwd" type="hidden">
+          </label></td>
+        </tr>
+    </tbody></table>
+  <% end %>
+
+
+
+  <% if flash[:error]%>
+    <div class="alert"><%= flash[:error]%></div>
+  <% end %>
+  <% if flash[:email]%>
+    <div class="alert"><%= flash[:email]%></div>
+  <% end %>
+  <% form_for @user, :html => { :method => :put }  do |f|%>
+    <%= f.error_messages %>
+    <table border="0" cellpadding="5" cellspacing="0" width="100%">
+      <tbody>
+        <tr>
+          <td width="13%">当前密码：</td>
+          <td width="87%"><%= f.password_field :oldpassword, :class => 'input'%></td>
+        </tr>
+        <tr>
+          <td>新邮箱：</td>
+          <td><%= f.text_field :email, :class => 'input' %></td>
+        </tr>
+        <tr>
+          <td>确认新邮箱：</td>
+          <td><%= f.text_field :email_confirmation, :class => 'input' %></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><label>
+              <%= submit_tag '提交修改', :class => 'button' %>
+              <input name="modify" id="step" value="email" type="hidden">
+          </label></td>
+        </tr>
+    </tbody></table>
+  <% end %>
+</div>

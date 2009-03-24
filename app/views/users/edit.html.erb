@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= @space.title %></title>
+    <%= stylesheet_link_tag "#{@space.theme.uri}/stylesheet_#{@space.resolution}"%>
+  </head>
+
+  <body>
+<% if flash[:error]%>
+  <div class="error"><%= flash[:error]%></div>
+<% end %>
+<% if flash[:notice]%>
+  <div class="alert"><%= flash[:notice]%></div>
+<% end %>
+<div class="modbox" id="l_profile">
+  <% form_for :user, :url => user_path, :html => { :method => :put } do |f|%>
+    <table border="0" cellpadding="5" cellspacing="0" width="100%">
+      <tbody><tr>
+          <td width="13%">当前密码：</td>
+          <td width="87%"><%= f.password_field :oldpassword, :class => 'input'%></td>
+        </tr>
+        <tr>
+          <td>新密码：</td>
+          <td><%= f.password_field :new_password, :class => 'input' %></td>
+        </tr>
+        <tr>
+          <td>确认新密码：</td>
+          <td><%= f.password_field :password_confirmation, :class => 'input' %></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><label>
+              <%= submit_tag '提交修改', :class => 'button' %>
+              <input name="modify" id="step" value="pwd" type="hidden">
+          </label></td>
+        </tr>
+    </tbody></table>
+  <% end %>
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+
+<% form_for :theme, :url => admin_themes_path do |f|%>
+  分类:<%= f.select :theme_category_id, ThemeCategory.find(:all).map {|m| [m.name, m.id]}%>
+  名称:<%= f.text_field :name, :class => 'input'%>
+  文件夹名:<%= f.text_field :uri, :class => 'input'%>
+  <%= submit_tag '添加', :class => 'button'%>
+<% end %>

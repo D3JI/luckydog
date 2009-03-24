@@ -1,0 +1,33 @@
+<h1>控制面板</h1>
+<%= @space.title %><br/>
+<%= @space.description%><p>
+<%= link_to '美化空间', edit_space_path(:id => @space )  %>
+<%= link_to '修改密码', edit_reginfo_space_path(:id => @user)%>
+<%= link_to '发表文章', new_space_entry_path(:space_id => @space) %>
+<br/>
+最近访客
+<% @visits.each do |visit|%>
+  <% if visit.guest.avatar %>
+    <%= image_tag(visit.guest.avatar.public_filename(:tiny))%>
+  <% else %>
+    <%= image_tag("../images/noface_tiny.jpg")%>
+  <% end %>
+  <%= link_to visit.guest.username, user_path(:id => visit.guest) %>
+<% end %>
+好友新鲜事
+<% @activities.each do |activity|%>
+  <% unless activity.item.nil? %>
+    <%= minifeed_message activity %>
+    <%= activity.created_at.strftime("%Y-%m-%d %H-%m")%>
+    <br/>
+  <% end %>
+<% end %>
+最近加入
+<% @recent_users.each do |user|%>
+  <% if user.space.avatar %>
+    <%= image_tag(user.space.avatar.public_filename(:tiny)) %>
+  <% else %>
+    <%= image_tag("../images/noface_tiny.jpg") %>
+  <% end %>
+  <%= link_to user.username, home_path(:user_id => @user.id)%>
+<% end %>

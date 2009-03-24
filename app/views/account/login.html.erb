@@ -1,0 +1,24 @@
+<div class="left auto_t_b_r w960">  
+  <div class="auto_t_b_l"></div>
+  <div class="auto_b_r">
+    <div class="auto_b_l">
+      <% if flash[:error]%>
+        <%= flash[:error]%>
+      <% end %>
+      <% if flash[:notice]%>
+        <%= flash[:notice]%>
+      <% end %>
+      <% form_tag login_path do %>
+        <h4>用户登录</h4>
+        <ul>
+          <label>账&nbsp;号:</label>
+          <%= text_field_tag :username, nil, :class => 'input'%><br/><br/>
+          <label>密&nbsp;码:</label>
+          <%= password_field_tag :password, nil, :class => 'input'%><p/>
+          <%= submit_tag '登录'%>
+        </ul>
+      <% end %>
+      <div id="login_link"><%= link_to '忘记密码' %>| <%= link_to '注册', new_user_path %></div>
+    </div>
+  </div>
+</div>

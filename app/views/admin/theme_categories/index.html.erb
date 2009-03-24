@@ -1,0 +1,34 @@
+<h1>Admin::Themes#index</h1>
+<p>Find me in app/views/admin/themes/index.html.erb</p>
+<%= javascript_include_tag "prototype"%>
+<%= link_to_function '新建分类', "Element.show('category')" %>
+<div id="category" style="display: none">
+  <fieldset>
+    <legend>添加分类</legend>
+    <% form_for :themecategory, :url => admin_theme_categories_path do |f| %>
+      <%= f.text_field :name, :class => 'input'%>
+      <%= submit_tag '添加', :class => 'button'%>
+      <%= link_to_function '关闭', "Element.hide('category')" %>
+    <% end %>
+  </fieldset>
+</div>
+<ul>
+<% @themecategories.each do |category|%>
+  <li><%= link_to category.name, admin_theme_category_themes_path(:theme_category_id => category.id) %>
+  | <!--< link_to 'Edit',edit_admin_theme_category_path(:id => category.id) %>-->
+  <%= link_to_function 'Edit', "Element.show('edit')"%>
+  | <%= link_to 'Del', admin_theme_category_path(:id => category.id), :method => :delete, :confirm => "确认要删除吗?"%>
+  </li>
+<div id="edit" style="display: none">
+  <fieldset>
+    <legend>编辑分类</legend>
+    <% form_for :theme_category, :url => admin_theme_category_path(:id => category.id), :html => { :method => :put } do |f| %>
+      <%= f.text_field :name, :class => 'input'%>
+      <%= submit_tag '保存', :class => 'button'%>
+      <%= link_to_function '取消', "Element.hide('edit')" %>
+    <% end %>
+  </fieldset>
+</div>
+<% end %>
+
+</ul>

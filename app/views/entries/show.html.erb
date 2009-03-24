@@ -1,0 +1,47 @@
+<div class="modbox" id="l_blog">
+  <ul>
+    <li class="ctitle"><%= @entry.title %>
+    <% if logged_in_user == @space.user %>
+      <%= link_to 'edit', edit_space_entry_path(:id => @entry)%> 
+      | <%= link_to 'delete', space_entry_path(:id => @entry), :method => :delete, :confirm => '确认要删除这篇文章?' %>
+    <% end %>
+    </li>
+    <li class="ctime"><%= @entry.created_at.strftime("%Y-%m-%d %H-%m") %>
+    </li>
+    <li class="dcon"><%= @entry.content %></li>
+    <li class="dmore">分类：| 浏览() |  评论(<%= @entry.comments_count%>) | </li>
+  </ul>
+  <div id="review">
+    <div>
+      <% @entry.comments.each do |comment|%>
+        <ul>
+          <li class="r_img"><% if comment.space.avatar %><%= image_tag(comment.space.avatar.public_filename())%>
+          <% else%>
+            <%= image_tag("../images/noface_tiny.jpg")%>
+          <% end %>
+          </li>
+          <li class="user"><%= link_to comment.space.user.username %> [<%= comment.created_at.strftime("%Y-%m-%d %H-%m") %>]
+          <% if logged_in_user == @entry.space.user %>
+            [<span style="color: rgb(153, 153, 153); cursor: pointer;">
+            <%= link_to '删除' , delete_comment_path(:id => comment.id), :method => :delete, :confirm => "确定删除?"%></span>]
+          <% end %></li>
+          <li class="rcon"><%= comment.content %></li><li class="clear">&nbsp;</li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <% form_for :comment, :url => space_entry_comments_path(:entry_id => @entry.id, :space_id => logged_in_user.space) do |f|%>
+    <ul id="addreview">
+      <li class="addtitle">添加评论</li>
+      <li>已登录:<%= logged_in_user.username %></li>
+      <li>
+      <%= f.text_area :content, :rows => 10, :cols => 30%>
+      </li> 
+      <li>
+      <%= f.hidden_field (:item_type, :value => "Entry") %>
+      <%= f.hidden_field (:item_id, :value => @entry.id) %>
+      <input name="switch" value="<%= space_entry_path(:entry_id => @entry)%>" type="hidden">
+      <%= submit_tag '提交评论', :class => 'button' %>
+      </li> 
+    </ul>
+  <% end %>
