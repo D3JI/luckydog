@@ -1,10 +1,18 @@
 <h1>控制面板</h1>
 <%= @space.title %><br/>
 <%= @space.description%><p>
+<h3><%= link_to '网站首页', home_path %></h3>
+<%= link_to '我的问答', myasks_space_path(:id => @space) %>
 <%= link_to '美化空间', edit_space_path(:id => @space )  %>
-<%= link_to '修改密码', edit_reginfo_space_path(:id => @user)%>
+<%= link_to '修改密码', edit_reginfo_space_path(:id => @space) %>
+<%= link_to '隐私设置', edit_userinfo_space_path(:id => @space)%>
 <%= link_to '发表文章', new_space_entry_path(:space_id => @space) %>
+<%= link_to '新建相册', new_space_album_path(:space_id => @space) %>
+<%= link_to '发起活动', new_event_path %>
 <br/>
+<% if logged_in_user.space == @space %>
+<%= link_to '我的博客', space_entries_path(:space_id => @space)%>
+<% end %>
 最近访客
 <% @visits.each do |visit|%>
   <% if visit.guest.avatar %>
@@ -29,5 +37,5 @@
   <% else %>
     <%= image_tag("../images/noface_tiny.jpg") %>
   <% end %>
-  <%= link_to user.username, home_path(:user_id => @user.id)%>
+  <%= link_to user.username, space_path(:id => user.space.id)%>
 <% end %>

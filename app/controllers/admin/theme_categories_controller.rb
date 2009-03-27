@@ -23,5 +23,4 @@ class Admin::ThemeCategoriesController < ApplicationController
     @themecategory.destroy
     redirect_to :action => 'index'
   end
-
 end

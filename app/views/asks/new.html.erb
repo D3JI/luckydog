@@ -1,0 +1,28 @@
+<div class="fixfloat">
+  <% form_for :ask, :url => asks_path do |f|%>
+    <div class="yn-mainblock-type2">
+      <div class="fixfloat yn-askmod">
+        <div class="l"><p class="title"><strong><span class="redsymbol">*</span>类别：</strong></div>
+        <div class="r">
+          <%= f.select :ask_category_id, AskCategory.find(:all).map {|m| [m.name, m.id]}%>
+        </div>
+      </div>
+      <div class="fixfloat yn-askmod">
+        <div class="l"><p class="title"><strong><span class="redsymbol">*</span>您的提问：</strong></p></div>
+        <div class="r">
+          <%= f.text_field :title, :class => 'input' %>
+        </div>
+      </div>
+      <div class="fixfloat yn-askmod">
+        <div class="l"><p class="title"><strong><span class="redsymbol">*</span>提问内容：</strong></p></div>
+        <div class="r">
+        <%= javascript_include_tag :fckeditor%>
+        <%= fckeditor_textarea ('ask', 'content', {:toolbarSet => 'Simple', :width => '150%', :height => '200px' }) %>
+        </div>
+        <div class="r">
+          <p><%= submit_tag '提交'%></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,65 @@
+<h1>首页</h1>
+<h3><%= link_to '控制面板',controlpanel_path(:id => @space) %> | <%= link_to '给我留言', space_comments_path(:space_id => @space)%>
+  | <%= link_to '发短信息', new_user_message_path(:user_id => @space.id)%>  | 
+  <% if logged_in_user.friends.include?(@space.user) %>
+    My Friend
+  <% else %>
+    <li class="a">
+    <%= link_to '加为好友', new_user_friend_path(:user_id => logged_in_user, :friend_id => @space.user)%>
+    </li>
+  <% end %>
+</h3>
+
+<% if flash[:error]%>
+  <%= flash[:error]%>
+<% end %>
+<%#= link_to '我的好友', user_friends_path(:user_id => @space.user)%>
+<%= link_to '我的好友', :controller => 'friends', :user_id => @space.user%>
+<% if logged_in_user == @space.user%>
+  <%= link_to '我的申请', :controller => 'friends', :action => 'myrequest'%>
+  <%= link_to '待审好友', :controller => 'friends', :action => 'needpassed'%>
+<% end %><br/>
+<%= link_to '网站首页', home_path %> |  <%= link_to '退出', logout_path %>
+<br/>
+个人信息
+<%= render :partial => 'shared/profile'%>
+日志
+<% @entries.each do |entry|%>
+  <%= entry.title %>
+  <%= entry.space.user.username %>
+  <%= entry.created_at.strftime("%Y-%m-%d %H-%m")%>
+  <%= entry.comments_count%>
+<% end %>
+相册
+<% @albums.each do |album|%>
+  <% if album.primary%>
+    <%= image_tag(album.primary.public_filename(:tiny))%>
+  <% end %>
+  <%= album.name%>
+<% end %>
+好友
+<% @friends.each do |friend|%>
+  <% if friend.friend.space.avatar%>
+    <%= image_tag(friend.friend.space.avatar.public_filename(:tiny))%>
+  <% else %>
+    <%= image_tag("../images/noface_tiny.jpg")%>
+  <% end %>
+  <%= friend.friend.username%>
+<% end %>
+最近访客
+<% @visits.each do |visit|%>
+  <% if visit.guest.avatar%>
+    <%= image_tag(visit.guest.avatar.public_filename(:tiny))%>
+  <% end %>
+  <%= visit.guest.username%>
+<% end %>
+留言
+<%@comments.each do |comment|%>
+  <%= comment.space.user.username%>
+  <%= time_ago_in_words(comment.created_at)%>
+  <%= comment.content%>
+<% end %>
+空间统计
+日志:<%= @space.entries_count%>
+照片:<%= @space.photos_count%>
+空间访问量:<%= @space.views_count %>

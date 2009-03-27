@@ -26,6 +26,9 @@ class EntriesController < ApplicationController
   def show
     @space = Space.find(params[:space_id])
     @entry = Entry.find(params[:id])
+    unless logged_in_user == @space.user 
+      @entry.update_attributes(:views_count => @entry.views_count + 1)
+    end
   end
 
   def edit

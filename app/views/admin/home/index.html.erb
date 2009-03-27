@@ -1,4 +1,8 @@
 <h1>Admin::Site#index</h1>
 <%= @admin.name%>
 <%= link_to '样式管理', admin_theme_categories_path %>
+<%= link_to '产品分类', admin_shop_categories_path %>
+<%= link_to '问答分类', admin_ask_categories_path %>
+<%= link_to '活动分类', admin_event_categories_path %>
+<%= link_to '添加商铺', new_shop_path %>
 <%= link_to '退出管理', :action => 'logout'%>

@@ -1,0 +1,32 @@
+<!-- 我们的论坛  --> 
+<div class="mainbox forumlist">
+  <h3><%= link_to '我们的论坛' %></h3>
+  <table id="category_10" summary="category10" style="" cellpadding="0" cellspacing="0">
+    <thead class="category">
+      <tr>
+        <th>版块</th>
+        <td class="forumlogo"></td>
+        <td class="nums">主题</td>
+        <td class="nums">帖数</td>
+        <td class="lastpost">最后发表</td>
+      </tr>
+    </thead>
+    <% @forums.each do |forum|%>
+      <tbody >
+        <tr>
+          <th class="new">
+            <%= link_to forum.title, forum_path(:id => forum) %>
+            <%= forum.description %>
+          </th>
+          <td class="forumlogo"></td>
+          <td class="nums"><%= forum.topics_count %></td>
+          <td class="nums"><%= forum.posts_count %></td>
+          <td class="lastpost"><%= link_to forum.last_post.topic.title, forum_topic_path(:forum_id => forum, :id => forum.last_post.topic )%> by 
+            <%= link_to forum.last_post.user.username, space_path(:id => forum.last_post.user.space) %> -- 
+            <%= forum.last_post.created_at.strftime("%Y-%m-%d %H:%M:%S")%>
+          </td>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>

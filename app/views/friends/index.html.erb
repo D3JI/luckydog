@@ -1,0 +1,28 @@
+<div class="modbox" id="l_friends">
+  <div id="notice">共
+    <span id="friendscnt"><%= @friends.size %></span>
+    位好友</div>
+  <ul>
+    <% @friends.each do |friend|%>
+      <li>
+      <p>
+      <% if friend.friend.space.avatar %>
+        <%= link_to image_tag(friend.friend.space.avatar.public_filename(:thumb))%>
+      <% else %>
+        <%= image_tag('../images/noface_tiny.jpg')%>
+      <% end %>
+      </p>
+      <p><%= link_to friend.friend.username, space_path(:id => friend.friend.space)  %></p>
+      <% if logged_in_user == @user %>
+        <p><%= link_to '发消息', new_user_message_path(:user_id => friend.friend)  %>
+        | <%= link_to '删除', user_friend_path(:id => friend.friend_id), :method => :delete, :confirm => '确认要删除吗?' %>
+        </p>
+      <% else %>
+        <p><%= link_to '发消息' , new_user_message_path(:user_id => friend.friend)%> |
+        <%= link_to '加为好友', new_user_friend_path(:user_id => logged_in_user, :friend_id => friend.friend.id) %></p>
+      <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="clear">&nbsp;</div>
+</div>

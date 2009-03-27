@@ -1,0 +1,29 @@
+<div class="ks_opt">
+  <div class="ask_form">
+    <% form_for :answer, :url => ask_answers_path(:ask_id => @ask.id) do |f|%>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody><tr>
+            <th>您正在回答该提问：</th>
+            <td>
+              <h2><%=@ask.title  %></h2>
+            </td>
+          </tr>
+          <tr>
+            <th><em>*</em>您的回答：</th>
+            <td>
+        <%= javascript_include_tag :fckeditor%>
+        <%= fckeditor_textarea ('answer', 'content', {:toolbarSet => 'Simple', :width => '150%', :height => '200px' }) %>
+              <p>还可输入<span id="count">2000</span>个字，回答越准确详细，越容易被选为最佳答案！</p>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+              <%= submit_tag '提交' %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

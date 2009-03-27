@@ -1,0 +1,76 @@
+<div id="content" class="cate">
+  <div id="main">
+    <div id="question" class="gmodule">
+      <div class="hd">
+        <h2>提问中问题 <span>- 浏览(目前为空)次</span></h2>
+      </div>
+      <div class="bd">
+        <div class="ksentry">
+          <div class="usrinfo">
+            <span class="avatar">
+              <% if @ask.user.space.avatar%>
+                <%= image_tag(@ask.user.space.avatar.public_filename(:tiny))%>
+              <% else %> 
+                <%= image_tag("../images/noface_tiny.jpg")%>
+              <% end %>
+            </span>
+            <p><b><%= @ask.user.username%></b></p>
+            <p></p>
+          </div>
+          <div class="entrydetail">
+            <h3><%= @ask.title %>  </h3>
+            <div class="original"><p><%= @ask.content %></p></div> 
+          </div>
+          <div class="entryinfo"><span><%= @ask.created_at.strftime("%Y-%m-%d %H-%m")%>
+            </span> - <span>离结束还有<%= @ask.end_at.strftime("%d").to_i - @ask.created_at.strftime("%d").to_i %> 天</span> 
+            - <span><%= @ask.answers_count %>个回答</span> 
+            - <span class="m"><%= @ask.score %></span> 
+          </div>
+          <div class="actions">
+            <div class="l">
+              <% if logged_in_user == @ask.user %>
+                <%= link_to '关闭该问题', close_ask_ask_path(:id => @ask), :method => :put %>
+                <%= link_to '编辑问题', edit_ask_path(:id => @ask)%>
+              <% else %>
+              <%= link_to '回答该问题',new_ask_answer_path(:ask_id=> @ask), :class => 'button' %></div>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="otheranswers" class="gmodule">
+      <div class="hd">
+        <h2>回答(<%= @ask.answers_count %>)</h2>
+      </div>
+      <div class="bd">
+        <ul>
+          <% @ask.answers.each do |answer|%>
+            <li class="ksentry">
+              <div class="usrinfo">
+                <span class="avatar">
+                  <% if answer.user.space.avatar%>
+                    <%= image_tag(answer.user.space.avatar.public_filename(:tiny))%>
+                  <% else %> 
+                    <%= image_tag("../images/noface_tiny.jpg")%>
+                  <% end %>
+                </span>
+                <p><b><%= answer.user.username%></b></p>
+                <p>
+                <% if answer.status == false && logged_in_user == @ask.user %>
+                <%= link_to '采取为答案', set_answer_ask_answer_path(:ask_id => @ask, :id => answer.id), :method => :put %>
+              <% end %>
+                </p>
+              </div>
+              <div class="entrydetail">
+                <p><%= answer.content %></p>
+              </div>
+              <div class="entryinfo">
+                <span><%=answer.created_at.strftime("%Y-%m-%d")%></span>
+              </div>
+            <% end %>
+        </div>
+      </div>
+      <p class="return_home"><%= link_to '知道首页', asks_path %>&gt;&gt;</p>
+    </div>
+  </div>
+</div>

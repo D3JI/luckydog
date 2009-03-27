@@ -1,0 +1,26 @@
+<div class="main top">
+  <div id="left">
+    <% @categoryevents.each do |event|%>
+      <ul class="camp_c top">
+        <li class="c_title1"><%= event.title %></li>
+        <li class="c_about">
+        <%= event.introduction %>
+        </li>
+        <li class="c_addr"> 类型：<%= link_to event.event_category.name, category_events_events_path(:category_id => event.event_category) %> 
+        | <%= event.views_count %>人点击| <%= event.comments_count %>人评论 | <%= event.members %>人参加</li>
+        <li class="c_user"><font class="redt"><%= event.members %>人</font><%= link_to '我要参加' , event_path(:id => event.id) %></li>
+        <li class="clear">&nbsp;</li>
+      </ul>
+    <% end %>
+  </div>
+</div>
+<div id="right">
+  <div id="but"><%= link_to '发起新活动', new_event_path%> </div>
+  <div id="mymser">
+    <div class="right_t">按分类浏览</div>
+    <ul id="list">
+      <% @eventcategories.each do |c|%>
+        <li><%= link_to c.name, category_events_events_path(:category_id => c.id) %> </li>
+      <% end %>
+    </ul>
+  </div>

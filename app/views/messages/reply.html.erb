@@ -1,0 +1,33 @@
+<div class="modbox">
+ <div class="tabs">
+    <%= link_to '收件箱', user_messages_path(:user_id => @user.id), :class => 'on' %><% unless @recipient_messages %>
+    [<span id="pm_unread"><%= @recipient_messages.size %></span>]<% end %>|
+  <b> <%= link_to '发件箱', message_to_user_messages_path(:sender_id => @user.id), :method => :put %></b> |
+  <%= link_to '垃圾箱', trashbox_user_messages_path(:user_id => @user.id), :method => :put %>
+</div>
+  <% form_for :message, :url => renew_user_message_path(:recipient_id => @recipient.id, :id => @current_message.id), :html => { :method => :put} do |f|%>
+    <table border="0" cellpadding="5" cellspacing="0" width="100%">
+      <tbody>
+        <tr>
+          <td >收件人：
+            <span class="STYLE1">*</span><%= text_field_tag :recipient_id, h(@recipient.username) %>
+          </td>
+        </tr>
+        <tr>
+          <td>标 &nbsp;题&nbsp;：
+            <span class="STYLE1">*</span> <%= text_field_tag :title, h(@current_message.title) %></td>
+        </tr>
+        <tr>
+          <td nowrap="nowrap">内容：<span class="STYLE1">*</span>
+        <%= javascript_include_tag :fckeditor%>
+        <%= fckeditor_textarea ('message', 'content', {:toolbarSet => 'Simple', :height => '200px' }) %>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;
+            <%= submit_tag 'Save', :class => 'button' %>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+</div>

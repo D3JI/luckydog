@@ -1,0 +1,58 @@
+<div id="con_ina">
+  <div class="mod">
+    <div class="modth">
+      <h1>隐私设置</h1>
+    </div>
+    <div class="modbox" id="l_profile">
+      <% if flash[:notice]%>
+        <%= flash[:notice]%>
+      <% end %>
+      <% form_for :userinfo, :url => space_user_info_path(:space_id => @space), :html => { :method => :put}  do |f|%>
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+          <tbody><tr>
+              <td width="13%">个人档案：</td>
+              <td width="87%">
+                <%= f.radio_button :overt, "1"%>
+                <label for="infolocked">完全公开(非好友可查看除联系方式的所有信息 好友可查看所有信息)</label></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>
+                <%= f.radio_button :overt, "2"%>
+                <label for="infolocked1"> 好友可见(非好友只能查看基本信息 好友可查看所有信息)</label></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>
+                <%= f.radio_button :overt, "3"%>
+                <label for="infolocked2"> 完全保密(所有用户都只能查看您的基本信息)</label></td>
+            </tr>
+            <tr>
+              <td>好友验证：</td>
+              <td>
+                <%= f.radio_button :authenticate, "1"%>
+                <label for="friendreq1">不需要验证</label></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td> <%= f.radio_button :authenticate, "2"%>
+                <label for="friendreq2">需要验证</label></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td> <%= f.radio_button :authenticate, "3"%>
+                <label for="friendreq3">拒绝添加</label></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>
+                <%= submit_tag '提交修改' %>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

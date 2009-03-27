@@ -1,10 +1,16 @@
 class User < ActiveRecord::Base
+  has_many :eventors
+  has_many :events, :through => :eventors
   belongs_to :role
+  has_one :user_info
   has_one :space
   has_many :visits
   has_many :activities, :order => 'activities.created_at DESC', :limit => 3, :include => :user
+  has_many :messages, :dependent => :destroy
   has_many :friendships
   has_many :friends, :through => :friendships, :class_name => 'User'
+  has_many :topics, :dependent => :destroy
+  has_many :posts, :dependent => :destroy
 
   validates_presence_of :username, :email, :password, :message => '不能为空'
   validates_length_of :username, :within => 3..10, :too_short => '不能少于3个字符', :too_long => '不能超过10个字符'

@@ -1,0 +1,150 @@
+<div id="yourhear"><%= link_to '活动', events_path %>&raquo;
+<%= link_to @event.event_category.name, category_events_events_path(:category_id => @event.event_category) %>&raquo;<%= @event.title %>
+  </div>
+  <div class="main top">
+  <div id="left">
+  <div id="innerheader">
+  <div id="innert_time"><%= @event.started_at.strftime("%Y")%><br />
+    <%= @event.started_at.strftime("%m月%d日")%></div>
+    <div id="inner_t">
+      <%= @event.title %>
+      </div>
+      <div id="inner_t2">
+      发起人：<!--< @event.user.username %>--><br />
+      发起时间：<%= @event.started_at.strftime("%Y-%m-%d %H:%M") %></div>
+  <div id="inner_t3">            <% if @event.offical == true %>官方活动<% else %> 会员活动<% end %>
+    </div>
+  </div>  
+  <div class="inner_t">基本信息</div>
+  <ul class="inner_c"><li>活动地点：<span class="inner_cs"><%= @event.location %></span></li>
+    <li>活动时间：<span class="inner_cs">集合时间：
+      <%= @event.started_at.strftime("%Y-%m-%d %H:%M")%>
+      |结束时间：
+      <%= @event.end_at.strftime("%Y-%m-%d %H:%M") %>
+    </span></li>
+    <li>联系电话：<span class="inner_cs"><%= @event.phone %></span></li>
+    <li>消费水平：<span class="inner_cs"><%= @event.money %>元/人</span></li>
+  <li>活动状态：<span class="inner_cs redt"><% if @event.closed == true %>您来晚了..嘿..<% else %>正在进行中...[<%= link_to '我要报名',"#join"%>] <% end %> </span></li>
+  </ul>
+  <div class="inner_t">活动要求</div>
+  <div class="inner_c">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="10%" valign="top">基本要求：</td>
+        <td width="90%" class="inner_cs"><br>
+          <%= @event.term %>
+          <br>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="inner_t">活动介绍</div>
+  <div class="inner_c3"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br>
+    <%= @event.introduction %> 
+  </div>
+  <div class="inner_t">注意事项</div>
+  <div class="inner_c inner_c3"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <%= @event.notes %>
+  </div>
+  <div class="inner_t">详细活动地点</div>
+
+  <div  class="inner_c4">
+    所在地区：<span class="inner_c3"></span><br />
+    详细地址：<span class="inner_c3"><%= @event.location %></span></div>
+
+  <div class="r_more">
+    <div class="tiao">
+    </div>
+  </div>
+
+  <div class="inner_t">活动报名<a name="join" id="join"></a></div>
+  <div class="inner_c"> 此次活动限制参加人数：<span class="green"><strong><%= @event.people %></strong></span>。&nbsp;
+    已成功报名的人数 <strong class="redt"><%= @event.members %>
+  </strong> 人</div>
+  <ul>
+    <% @event.eventors.each do |e|%>
+      <li>
+      <% if e.user.space.avatar %>
+        <%= image_tag(e.user.space.avatar.public_filename(:tiny))%>
+      <% else %>
+        <%= image_tag("../images/noface_tiny.jpg ")%>
+      <% end %>
+      <br/>
+      <%= link_to e.user.username, space_path(:id => e.user.space)%>
+      报名<%= e.members %>人<br/>
+      </li>
+    <% end %>
+
+  </ul>
+  <div class="clear"></div>
+  <div class="inner_c">
+
+    <strong>注意：</strong> 活动完全是网友自愿组织、自愿参加的。因聚会所产生的任何直接间接或偶然性损失，本站不承担任何责任。</div>
+  <div class="inner_join">
+    <div><span class="redt">我要报名：</span>
+      <% if flash[:notice] %>
+        <%= flash[:notice] %>
+      <% end %>
+
+      <% form_for :eventor, :url => event_path(:id => @event.id), :html => {:method => :put} do |f| %>
+        联系电话：
+        <%= f.text_field :phone%>
+        报名人数:<select id="mem" name="eventor[members]">
+          <option value="1" selected="selected"> 我一个</option>
+          <option value="2"> 两个人</option>
+          <option value="3"> 三个人</option>
+          <option value="4"> 四个人</option>
+        </select>
+        <%=submit_tag '确定' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="inner_t">网友留言：(
+    <span id="campaign_comm_count"><%= @event.comments_count %></span>
+    条)</div>
+
+  <ul class="inner_c6" id="comments_l">
+    <% @event.comments.each do |c|%>
+    <li id="campaign_comm_9110">
+    <div class="quest_t"><span> &nbsp;&nbsp;<%= c.id %>楼 </span>发表时间：
+      <%= c.created_at.strftime("%Y-%m-%d %H:%M:%S")%>
+      <div class="quest_del"></div></div>
+    <% if c.space.avatar %>
+      <%= image_tag(c.space.avatar.public_filename(:tiny))%>
+    <% else %>
+      <%= image_tag("../images/noface_tiny.jpg")%>
+    <% end %>
+      <div class="quest_c"><%= link_to c.space.user.username, space_path(:id => c.space) %> 说：<%= c.content %></div>
+    <div class="clear">&nbsp;</div></li>
+  <% end %>
+  </ul>
+
+  <div class="inner_t">请您留言：注意- 这里是留言区，并非报名区！</div>
+  <% form_for :comment, :url => event_comments_path(:event_id => @event.id, :space_id => logged_in_user.space) do |f|%>
+  <div class="inner_c">
+    <label>
+      <%= f.text_area :content, :rows => 10, :cols => 30%>
+    </label>
+  </div>
+  <div class="inner_c top">
+    <%= f.hidden_field (:item_type, :value => "Event") %>
+      <%= f.hidden_field (:item_id, :value => @event.id) %>
+      <input name="switch" value="<%= event_path(:id => @event)%>" type="hidden">
+      <%= submit_tag '提交评论', :class => 'button' %>
+  </div>
+<% end %>
+  <div class="clear">&nbsp;</div>
+</div>
+
+<div id="right"> 
+  <div id="but"><%= link_to '发起新活动', new_event_path%> </div>
+  <div class="right_t">按分类浏览</div>
+  <ul id="list">
+    <% @eventcategories.each do |e|%>
+      <li><%= link_to e.name, category_events_events_path(:category_id => e.id) %></li>
+    <% end %>
+  </ul>
+</div>
+<div class="clear">&nbsp;</div>

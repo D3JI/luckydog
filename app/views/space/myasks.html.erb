@@ -1,0 +1,55 @@
+<h3>我的问题:</h3>
+<div class="bd">
+  <table>
+    <thead>
+      <tr>
+        <th class="mqlist_cate">分类</th>
+        <th class="mqlist_title">标题</th> 
+        <th class="mqlist_offer">悬赏</th>
+        <th class="mqlist_answer"> 回答</th>
+        <th class="mqlist_dt">时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @asks.each do |ask|%>
+        <tr>
+          <td class="mqlist"><%= link_to ask.ask_category.name, category_asks_asks_path(:category_id => ask.ask_category), :method => :put %></td>
+          <td class="mqlist_title">
+            <%= link_to ask.title, ask_path(:id => ask.id)%>
+          </td>
+          <td class="mqlist_offer"><span><%= ask.score%></span></td>
+          <td class="mqlist_answer"><%= ask.answers_count%></td>
+          <td class="mqlist_dt"><font size=2><%= time_ago_in_words(ask.created_at)%> 前</font> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br/>
+<h3>我的回答:</h3>
+<div class="bd">
+  <table>
+    <thead>
+      <tr>
+        <th class="mqlist_cate">分类</th>
+        <th class="mqlist_title">标题</th> 
+        <th class="mqlist_dt">更新时间</th>
+        <th class="mqlist_dt">解决者</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @answers.each do |answer|%>
+        <tr>
+          <td class="mqlist"><%= link_to answer.ask.ask_category.name, category_asks_asks_path(:category_id => answer.ask.ask_category), :method => :put %></td>
+          <td class="mqlist_title">
+            <%= link_to answer.ask.title, ask_path(:id => answer.ask.id)%>
+          </td>
+          <td class="mqlist_dt"><font size=2><%= time_ago_in_words(answer.ask.updated_at)%> 前</font> </td>
+        <td class="mqlist_sl"><% if answer.ask.solved == true %><%= answer.ask.solvedanswer.user.username %><% end %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br/>
+

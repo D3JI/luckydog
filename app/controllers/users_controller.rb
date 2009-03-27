@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       @space = Space.create(:user_id => @user.id, :address => "i.#{request.host}/#{@user.username}")
+      @userinfo = UserInfo.create(:user_id => @user.id)
       #@space = @user.space.create(:address => "i.#{request.host}/#{@user.username}")
       self.logged_in_user= @user
       flash[:notice] = "用户注册成功"

@@ -1,0 +1,35 @@
+<%= javascript_include_tag "prototype"%>
+<div class="tabs">
+<%= link_to '收件箱', user_messages_path(:user_id => @user.id)%><% unless @recipient_messages %>
+    [<span id="pm_unread"><%= @recipient_messages.size %></span>]<% end %>| 
+    <b>  <%= link_to '发件箱', message_to_user_messages_path(:sender_id => @user.id), :method => :put, :class => 'on'  %></b> |
+  <%= link_to '垃圾箱', trashbox_user_messages_path(:user_id => @user.id), :method => :put %>
+</div>
+ <table border="0" cellspacing="0" width="100%">
+    <tbody><tr>
+        <td class="mail_line" align="left" height="40" width="40%"><strong>标题</strong></td>
+        <td class="mail_line" align="left" width="40%"><strong>时间</strong></td>
+        <td class="mail_line" align="left" width="20%"><strong>收件人</strong></td>
+      </tr>
+    </tbody>
+      <tbody>
+        <% @send_messages.each do |message|%>
+          <tr>
+            <td class="mail_line" height="40" width="7%"><label>
+                <input name="mid[]" id="mid_3255" value="3255" type="checkbox">
+                <%= link_to message.title %>
+              </td>
+              <td><%= message.created_at %></td>
+              <td><%= message.recipient.username %></td>
+            </tr>
+            <tr><td>
+                <div> <%= message.content%></div>
+                <div class="mail_admin">
+                  <%= link_to '删除', user_message_path(:id => message.id), :method => :delete, :confirm => "Do you sure ?" %>
+                </div>
+            </td></tr>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
+</div>

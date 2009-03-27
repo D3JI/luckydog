@@ -1,0 +1,23 @@
+<div id="l_pic" class="modbox">
+  <div id="notice">共 <%= @space.albums_count %> 个相册共 <%= @space.photos_count %> 张图片。
+    <% if logged_in_user == @space.user %>
+      <%= link_to '创建相册', new_space_album_path(:space_id => @space) %></div>
+  <% end %>
+  <% @albums.each do |album|%>
+    <ul>
+      <li>
+      <% if album.primary%>
+        <p class="photo"><%= link_to image_tag(album.primary.public_filename(:thumb))%> </p>
+      <% end %>
+      <p><%=link_to album.name, space_album_photos_path(:album_id => album.id) %><br>
+      <strong>(<%= album.photos_count %>)</strong><br>
+      </p>
+      <% if logged_in_user == @space.user %>
+        <p><%= link_to '编辑', edit_space_album_path(:id => album.id) %> 
+        | <%= link_to '删除', space_album_path(:id => album.id), :method => :delete, :confirm => "确定要删除吗?" %>
+        |<%= link_to '上传照片', new_space_album_photo_path(:space_id => @space, :album_id => album)%></p>
+      <% end %>
+      </li>
+    </ul>
+  <% end %>
+</div>

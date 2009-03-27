@@ -1,0 +1,32 @@
+<div id="nav"><%= link_to '网站首页', home_path%> &gt;&gt; <%= link_to @forum.title, forums_path %>
+  &gt;&gt; 发新话题</div>
+<% form_for :topic, :url => forum_topics_path do |f|%>
+  <div class="mainbox formbox">
+    <h1>发新话题</h1>
+    <table summary="post" id="newpost" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th>用户名</th>
+          <td>
+            <%= logged_in_user.username %> [<%= link_to '退出', logout_path %>]
+          </td>
+        </tr>
+    </thead></table>
+<div class="postform">
+      <h5><label for="subject">标题</label>
+        <%= f.text_field :title, :class => 'input' %>
+        <div id="threadtypes"></div>
+        <p><label>内容</label>
+        <%= javascript_include_tag :fckeditor%>
+        <%= fckeditor_textarea ('topic', 'content', {:toolbarSet => 'Simple', :width => '150%', :height => '200px' }) %>
+        </p>
+        <p class="btns">
+        <%= submit_tag '提交'%>
+        </p>
+      </div>
+    </div>
+  </div>
+  <br>
+<% end %>
+</div>
+

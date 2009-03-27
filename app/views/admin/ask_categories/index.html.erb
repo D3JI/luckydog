@@ -1,0 +1,22 @@
+<%= javascript_include_tag "prototype"%>
+<%= link_to_function '新建分类', "Element.show('category')" %>
+<div id="category" style="display: none">
+  <fieldset>
+    <legend>添加分类</legend>
+    <% form_for :askcategory, :url => admin_ask_categories_path do |f| %>
+      <%= f.text_field :name, :class => 'input'%>
+      <%= submit_tag '添加', :class => 'button'%>
+      <%= link_to_function '关闭', "Element.hide('category')" %>
+    <% end %>
+  </fieldset>
+</div>
+<ul>
+<% @askcategories.each do |ask|%>
+  <li>
+  <%= link_to ask.name%>
+  | <%= link_to_function 'Edit', "Element.show('edit')"%>
+  | <%= link_to 'Del', admin_ask_category_path(:id => ask.id), :method => :delete, :confirm => "确认要删除吗?"%>
+  </li>
+<div>
+<% end %>
+</ul>

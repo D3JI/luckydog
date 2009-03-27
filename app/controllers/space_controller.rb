@@ -1,5 +1,12 @@
 class SpaceController < ApplicationController
   #  layout 'spaces'
+
+  def myasks
+    @space = Space.find(params[:id])
+    @asks = Ask.find(:all, :conditions => ["user_id = ?",@space.user])
+    @answers = Answer.find(:all, :conditions => ["user_id = ?", @space.user ])
+  end
+
   def edit
     @space = Space.find(params[:id])
     @categories = ThemeCategory.find(:all, :order => 'created_at desc')
@@ -19,9 +26,12 @@ class SpaceController < ApplicationController
     @user = @space.user
     @entries = @space.entries.find(:all, :order => 'created_at DESC') 
     @albums = @space.albums.find(:all, :order => 'created_at DESC')
-    @friends = @space.friendships
+    @friends = @user.friendships
     @visits = Visit.find_by_sql ["SELECT guest_id, count(DISTINCT guest_id) from visits where url like '%users/?%' GROUP BY guest_id ", @user]
     @comments = @space.comments
+    unless logged_in_user == @space.user
+    @space.update_attributes(:views_count => @space.views_count + 1)
+    end
   end
 
   def panel
@@ -34,8 +44,13 @@ class SpaceController < ApplicationController
   end
 
   def edit_reginfo
-    @user = User.find(params[:id])
-    @space = @user.space
+    @space = Space.find(params[:id])
+    @user = @space.user
   end
 
+  def edit_userinfo
+    @space = Space.find(params[:id])
+    @user = @space.user
+    @userinfo = UserInfo.find_by_user_id(@user)
+  end
 end

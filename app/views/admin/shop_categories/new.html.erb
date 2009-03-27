@@ -1,0 +1,19 @@
+<h1> 添加分类</h1>
+<% form_for :category, :url => admin_shop_categories_path do |f| %>
+  <p>
+  <%= f.label :所属分类 %>
+  <%= f.select (:parent_id, @categories.map {|u| [u.name, u.id]},  {:prompt => '默认分类'} )%>
+<span id="child_category">
+   </span>
+  </p>
+    <p>
+  <%= f.label :名称 %><br />
+  <%= f.text_field :name %>
+  </p>
+  <p>
+  <%= submit_tag "添加" %>
+  </p>
+<% end %>
+<br/>
+<%= link_to '返回', admin_shop_categories_path %>
+

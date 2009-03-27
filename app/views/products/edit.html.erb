@@ -1,0 +1,62 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+  <% form_for :product, :url => shop_product_path(:id => @product), :html => {:multipart => true, :method => :put }  do |f| %>
+    <%= f.error_messages %>
+    <tr>
+      <td width="24%" align="right"><font color="#FF0000">* </font>商品名称：</td>
+      <td><span>
+          <%= f.text_field :name, :size => 20, :maxlength => 50%>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><font color="#FF0000">* </font>价格：</td>
+      <td><%= f.text_field :price, :size => 10 %></td>
+    </tr>
+
+    <tr>
+      <td align="right" valign="top">数量：</td>
+      <td><%= f.text_field :counts, :size => "10", :maxlength => "6" %>		</td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">折扣：</td>
+      <td><%= f.text_field :discount, :size => 10 %>		</td>
+    </tr>
+    <tr>
+      <td align="right" ><font color="#FF0000">* </font>产品介绍：</td>
+      <td>
+        <%#= fckeditor_textarea ('product', 'introduction', {:toolbarSet => 'Simple', :width => '150%', :height => '200px' }) %>
+        <%= f.text_area :introduction, :rows => 5, :cols => 50 %>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="right">优惠说明：</td>
+      <td>
+        <%#= javascript_include_tag :fckeditor%>
+        <%#= fckeditor_textarea ('product', 'offer_description', {:toolbarSet => 'Simple', :width => '150%', :height => '200px' }) %>
+        <%= f.text_area :offer_description, :rows => 5, :cols => 50 %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right" >预约说明：</td>
+      <td>
+        <%#= javascript_include_tag :fckeditor%>
+        <%#= fckeditor_textarea ('product', 'reservation_help', {:toolbarSet => 'Simple', :width => '150%', :height => '200px' }) %>
+        <%= f.text_area :reservation_help, :rows => 5, :cols => 50 %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">上传图片:</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;(<font color="#FF0000">*为必填项</font>)</td>
+      <td>
+        <%= submit_tag '提交' %>
+        &nbsp;&nbsp;
+        <%= link_to '取消', shop_products_path(:shop_id => @product.shop) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+</div>

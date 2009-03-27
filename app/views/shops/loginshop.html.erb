@@ -1,0 +1,10 @@
+<% form_tag loginshop_path do %>
+  <h4>商户登录</h4>
+  <ul>
+    <label>账&nbsp;号:</label>
+    <%= text_field_tag :login_name, nil, :class => 'input'%><br/><br/>
+    <label>密&nbsp;码:</label>
+    <%= password_field_tag :password, nil, :class => 'input'%><p/>
+    <%= submit_tag '登录'%>
+  </ul>
+<% end %>

@@ -1,0 +1,22 @@
+<div class="modbox" id="l_friends">
+  <div id="notice">共
+    <span id="friendscnt"><%= @friends.size %></span>
+    个申请待处理</div>
+  <ul>
+    <% @friends.each do |friend|%>
+      <li>
+      <p>
+      <% if friend.user.space.avatar %>
+        <%= link_to image_tag(friend.user.space.avatar.public_filename(:thumb))%>
+      <% else %>
+        <%= image_tag('../images/noface_tiny.jpg')%>
+      <% end %>
+      </p>
+      <p><%= link_to friend.user.username, space_path(:id => friend.user.space)  %></p>
+      <p><%= link_to '同意' , :controller => 'friends', :action => 'update', :user_id => friend.user%> |
+        <%= link_to '不同意', :controller => 'friends', :action => 'destroy', :id => friend.user, :confirm => 'Sure?' %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="clear">&nbsp;</div>
+</div>

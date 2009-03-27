@@ -1,0 +1,43 @@
+<div class="main top">
+  <div id="left">
+    <div class="title top">官方活动</div>
+    <% @official_events.each do |off|%>
+      <ul class="camp_c top">
+        <li class="c_title1"><%= off.title %></li>
+        <li class="c_about">
+        <%= off.introduction %>
+        </li>
+        <li class="c_addr"> 类型：<%= link_to off.event_category.name, category_events_events_path(:category_id => off.event_category.id) %>
+        | <%= off.views_count %>人点击| <%= off.comments_count %>人评论 | <%= off.members %>人参加</li>
+        <li class="c_user"><font class="redt"><%= off.members %>人</font><%= link_to '我要参加' , event_path(:id => off.id) %></li>
+        <li class="clear">&nbsp;</li>
+      </ul>
+    <% end %>
+
+    <div class="title top">最新活动</div>
+    <% @recent_events.each do |r|%>
+      <ul class="camp_c top">
+        <li class="c_title1"><%= r.title %></li>
+        <li class="c_about">
+        <%= r.introduction %>
+        </li>
+        <li class="c_addr"> 类型：<%= link_to r.event_category.name, category_events_events_path(:category_id => r.event_category.id)%> | <%= r.views_count %>人点击| <%= r.comments_count %>人评论 | <%= r.members %>人参加</li>
+        <li class="c_user"><%= r.members %> 人
+        <%= link_to '我要参加', event_path(:id => r.id) %></li>
+        <li class="clear">&nbsp;</li>
+      </ul>
+    <% end %>
+  </div>
+</div>
+<div id="right">
+  <div id="but"><%= link_to '发起新活动', new_event_path%> </div>
+  你已经发起了<%= logged_in_user.events_count %>个活动
+  您已经参加了<%= logged_in_user.eventors.size %> 个活动
+  <div id="mymser">
+    <div class="right_t">按分类浏览</div>
+    <ul id="list">
+      <% @eventcategories.each do |c|%>
+        <li><%= link_to c.name, category_events_events_path(:category_id => c.id) %> </li>
+      <% end %>
+    </ul>
+  </div>

@@ -1,0 +1,26 @@
+<h3>所有问题:</h3>
+<div class="bd">
+  <table>
+    <thead>
+      <tr>
+        <th class="mqlist_title">标题</th> 
+        <th class="mqlist_offer">悬赏</th>
+        <th class="mqlist_answer"> 回答</th>
+        <th class="mqlist_dt">时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @asks.each do |ask|%>
+        <tr>
+          <td class="mqlist_title">
+            <%= link_to ask.title, ask_path(:id => ask.id)%>
+          </td>
+          <td class="mqlist_offer"><span><%= ask.score%></span></td>
+          <td class="mqlist_answer"><%= ask.answers_count%></td>
+          <td class="mqlist_dt"><font size=2><%= time_ago_in_words(ask.created_at)%> 前</font> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br/>

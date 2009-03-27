@@ -1,0 +1,36 @@
+<%= link_to '新建分类', new_admin_shop_category_path%>
+<h1>所有分类<h1>
+    <% if flash[:notice] %>
+      <center>  <font color='red'>   <%= flash[:notice]%></font></center>
+    <% end %>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>名称</th>
+        <th>所属分类ID</th>
+        <th>商家数量</th>
+        <th>操作</th>
+      </tr>
+      <% for category in @categories %>
+        <tr>
+          <td>&nbsp;<%= category.id %></td>
+          <td>&nbsp;<%= category.name %></td>
+          <td>&nbsp;<%= category.parent_id  %></td>
+          <td>&nbsp;<%= category.shops_count  %></td>
+          <td>&nbsp;<%= link_to '修改', edit_admin_shop_category_path(category) %> |
+            <%= link_to '删除', admin_shop_category_path(category), :confirm => '确定删除吗?', :method => :delete %></td>
+          <% category.subcategories.each do |sub| -%>
+            <tr>
+              <td>&nbsp;&nbsp;</td>
+              <td><%= sub.name %></td>
+              <td>  <%= sub.parent_id  %></td>
+              <td>&nbsp;<%= sub.shops_count  %></td>
+              <td><%= link_to '修改', edit_admin_shop_category_path(sub) %> |
+                <%= link_to '删除', admin_shop_category_path(sub), :confirm => '确定删除吗?', :method => :delete %>
+              </td>
+            </tr>
+          <% end -%>
+        </tr>
+      <% end %>
+    </table>
+    <br />

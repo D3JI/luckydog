@@ -1,5 +1,28 @@
 <% if is_logged_in? %>
-<%= link_to '登出', logout_path %>
+  <%= link_to 'Logout', logout_path %>
+  <%= link_to '论坛', forums_path%>
+  <%= link_to '知道', asks_path  %>
+  <%= link_to '登记店铺', loginshop_path %>
+  <p>
+  产品分类
+  <br/>
+  <div class="mod" id="subnav">
+    <div class="bgtop"></div>
+    <div class="modbox">
+      <dl>
+        <% for category in @parent_categories %>
+          <dt><%= link_to category.name, home_path %></dt>
+          <dd>
+          <% category.subcategories.each do |sub| -%>
+            <%= link_to sub.name, home_path %>
+          <% end %>
+          </dd>
+        <% end -%>
+      </dl>
+    </div>
+    <div class="bgbottom"></div>
+  </div>
+  </p>
 <% else %>
   <%= link_to '登录', login_path %>
 <% end %>

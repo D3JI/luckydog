@@ -1,0 +1,2 @@
+module Admin::ShopCategoriesHelper
+end

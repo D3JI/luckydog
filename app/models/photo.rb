@@ -1,7 +1,7 @@
 require 'RMagick'
 class Photo < ActiveRecord::Base
-  include ActivityLogger
-  after_create :log_activity
+#  include ActivityLogger
+#  after_create :log_activity
 
   has_many :comments, :as => :item
   belongs_to :album, :counter_cache => true

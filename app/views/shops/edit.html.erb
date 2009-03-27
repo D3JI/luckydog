@@ -1,0 +1,18 @@
+<% form_for :shop, :url => shop_path, :html => {:method => :put} do |f| %>
+  <ul>
+    <li class="left">账号：</li>
+    <li class="right"> <%= f.text_field :login_name, :class => 'input'%> </li>
+    <li class="left">密码：</li>
+    <li class="right"> <%= f.password_field :password, :class => 'input'%> </li>
+    <li class="left">确认密码：</li>
+    <li class="right"> <%= f.password_field :password_confirmation, :class => 'input'%> </li>
+    <li class="left">店铺名称：</li>
+    <li class="right"> <%= f.text_field :shopname, :class => 'input'%> </li>
+    <li class="left">店铺描述：</li>
+    <li class="right"> <%= f.text_field :description, :class => 'input'%> </li>
+    <li class="left">地址：</li>
+    <li class="right"> <%= f.text_field :address, :class => 'input'%> </li>
+    <li class="left"></li>
+    <li class="butten"> <%= submit_tag '提交', :class => 'button'%> </li>
+  </ul>
+<% end %>

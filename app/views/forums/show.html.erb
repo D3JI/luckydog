@@ -1,0 +1,69 @@
+<div class="mainbox threadlist">
+  <h1>
+    <%= link_to @forum.title , forums_path %>
+  </h1>
+  <input name="formhash" value="5458e34c" type="hidden">
+  <table summary="forum_50" cellpadding="0" cellspacing="0">
+    <thead class="category">
+      <tr>
+        <td class="folder">&nbsp;</td>
+        <td class="icon">&nbsp;</td>
+        <th>标题</th>
+        <td class="author">作者</td>
+        <td class="nums">回复/查看</td>
+        <td class="lastpost">最后发表</td>
+      </tr>
+    </thead>
+    <% @forum.topics.each do |topic|%>
+      <tbody id="stickthread_17667">
+        <tr>
+          <td class="folder">
+          </td>
+          <td class="icon">
+            &nbsp;</td>
+          <th class="common">
+            <label>
+              &nbsp;</label>
+            <span id="thread_17667"><%= link_to topic.title, forum_topic_path(:forum_id => topic.forum, :id => topic) %></span>
+          </th>
+          <td class="author">
+            <cite>
+              <%= link_to topic.user.username%>
+            </cite>
+            <em><%= topic.created_at.strftime("%Y-%m-%d")%></em>
+          </td>
+          <td class="nums"><strong><%= topic.posts_count %></strong> / <em><%= topic.views_count %></em></td>
+          <td class="lastpost">
+            <em><%= topic.lastpost.created_at.strftime("%Y-%m-%d %H:%M:%S") %></em>
+            <cite>by <%= link_to topic.user.username %></cite>
+          </td>
+        </tr>
+      </tbody>		
+    <% end %>
+  </table>
+</div>
+
+<div class="pages_btns">
+  <div class="pages">
+    <%= link_to '发新话题', new_forum_topic_path(:forum_id => @forum)%>
+  </div>
+</div>
+<% form_for :topic, :url => forum_topics_path(:forum_id => @forum.id) do |f|%>
+  <div id="quickpost" class="box">
+    <span class="headactions">
+    </span>
+    <h4>快速发新话题</h4>
+    <div class="postform">
+      <h5><label for="subject">标题</label>
+        <%= f.text_field :title, :class => 'input' %>
+        <div id="threadtypes"></div>
+        <p><label>内容</label>
+        <%= javascript_include_tag :fckeditor%>
+        <%= fckeditor_textarea ('topic', 'content', {:toolbarSet => 'Simple', :width => '150%', :height => '200px' }) %>
+        </p>
+        <p class="btns">
+        <%= submit_tag '提交'%>
+        </p>
+      </div>
+    </div>
+  <% end %>

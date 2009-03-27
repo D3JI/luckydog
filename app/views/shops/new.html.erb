@@ -1,0 +1,12 @@
+<% form_for @shop do |f| %>
+  <ul>
+    <li class="left">账号：</li>
+    <li class="right"> <%= f.text_field :login_name, :class => 'input'%> </li>
+    <li class="left">密码：</li>
+    <li class="right"> <%= f.password_field :password, :class => 'input'%> </li>
+    <li class="left">确认密码：</li>
+    <li class="right"> <%= f.password_field :password_confirmation, :class => 'input'%> </li>
+    <li class="left"></li>
+    <li class="butten"> <%= submit_tag '注册', :class => 'button'%> </li>
+  </ul>
+<% end %>

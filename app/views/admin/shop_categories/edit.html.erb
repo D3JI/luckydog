@@ -1,0 +1,18 @@
+<% form_for :category ,:url => admin_shop_category_path(@category), :html => {:method => :put } do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :名称 %><br />
+    <%= f.text_field :name %>
+  </p>
+  <% if @category.parent_id %>
+  <p>
+  <%= f.label :所属分类 %><br />
+  <%= f.collection_select :parent_id,@categories,  :id, :name%>
+    </p>
+  <% end %>
+  <p>
+    <%= f.submit "更新" %>
+  </p>
+<% end %>
+<%= link_to '返回', admin_shop_categories_path %>
+

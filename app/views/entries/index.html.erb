@@ -1,2 +1,23 @@
-<h1>Entries#index</h1>
-<p>Find me in app/views/entries/index.html.erb</p>
+<% if logged_in_user == @space.user %>
+  <div class="modopt"><%= link_to '写新文章', new_space_entry_path(:space_id => logged_in_user.space) %>
+  <% end %>
+  <div class="modbox" id="l_blog">
+    <div id="notice">共<%= @space.entries_count %>篇文章</div>
+    <ul id="blog_post_25598">
+      <% @entries.each do |entry|%>
+        <li class="ctitle">
+        <%= link_to entry.title, space_entry_path(:id => entry) %>
+        <% if @space.user == logged_in_user %>
+          <%= link_to 'edit', edit_space_entry_path(:space_id => entry.space, :id => entry)%> 
+          | <%= link_to 'delete', space_entry_path(:id => entry), :method => :delete, :confirm => '确认要删除这篇文章?' %>
+        <% end %>
+        </li>
+        <li class="ctime"><%= entry.created_at %></li>
+        <li class="bcon"><%= entry.content %></li>
+        | 浏览 <%= entry.views_count %>|  评论(<%= entry.comments_count %>)</p>
+        </li>
+      <% end %>
+    </ul>
+    <div class="clear"></div>
+  </div>
+</div>

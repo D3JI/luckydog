@@ -1,0 +1,9 @@
+<%= link_to '编辑', edit_shop_product_path(:id => @product)%>
+商品名称:<%= @product.name %>
+商品价格:<%= @product.price %>
+折扣价:<%= @product.discount %>
+商品介绍:<%= @product.introduction%>
+优惠说明:<%= @product.offer_description%>
+预约说明:<%= @product.reservation_help %>
+<%= link_to '我的店铺', shop_path(:id => @product.shop)%>
+

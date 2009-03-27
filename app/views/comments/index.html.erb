@@ -1,0 +1,45 @@
+<div class="modbox">
+  <div class="modbox" id="l_quest">
+    <div id="notice">共有<strong></strong> [<%= @space.comments.size %>]条留言</div>
+    <% @space.comments.each do |comment|%>
+      <ul>
+        <li class="q_photo">
+        <% if comment.space.avatar %>
+          <%= image_tag(comment.space.avatar.public_filename(:thumb))%>
+        <% end %> 
+        </li>
+        <li class="q_title"><%= link_to comment.space.user.username %> 说：</li>
+        <li class="q_con"><%= comment.content %></li>
+        <% if logged_in_user == @space.user %>
+          <li class="postcon">
+          <span class="post">主人回复：</span>
+          <span title="点击修改"><%= comment.reply %></span>
+          </li>
+        <% end %>
+        <li class="q_time">[<%= comment.created_at.strftime("%Y-%m-%d %H-%m") %>] 
+        <% if logged_in_user == @space.user %>
+          [<%= link_to '删除', delete_comment_path(:id => comment.id), :method => :delete, :confirm => "确定要删除吗?" %>]
+        <% end %>
+        </li>
+        <li class="clear">&nbsp;</li>
+      </ul>
+    <% end %>
+  </div>
+  <ul id="addreview">
+    <% form_for :comment, :url => space_comments_path do |f|%>
+      <ul id="addreview">
+        <li class="addtitle">添加留言</li>
+        <li>已登录:<%= logged_in_user.username %></li>
+        <li>
+        <%= f.text_area :content, :rows => 10, :cols => 30%>
+        </li> 
+        <%= f.hidden_field (:item_type, :value => "Space")%>
+        <%= f.hidden_field (:item_id, :value => @space.id)%>
+      <input name="switch" value="<%= space_comments_path(:id => @space)%>" type="hidden">
+        <li>
+        <%= submit_tag '提交留言', :class => 'button' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
