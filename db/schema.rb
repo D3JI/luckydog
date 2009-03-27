@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090326092405) do
+ActiveRecord::Schema.define(:version => 20090327013342) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -194,17 +194,15 @@ ActiveRecord::Schema.define(:version => 20090326092405) do
 
   create_table "products", :force => true do |t|
     t.integer  "shop_id"
-    t.integer  "counts"
     t.string   "name"
     t.string   "address"
     t.text     "introduction"
     t.text     "offer_description"
-    t.text     "reservation_help"
     t.boolean  "is_recommend",      :default => false
     t.decimal  "price"
-    t.float    "discount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "discount"
   end
 
   create_table "roles", :force => true do |t|
